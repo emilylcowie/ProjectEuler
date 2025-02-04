@@ -4,14 +4,58 @@
 #   By considering the terms in the Fibonacci sequence whose values do not exceed four million,
 #   find the sum of the even-valued terms. "
 
-list = [1, 2]
-sum = 2
+#-----------------------------------------------------
+# First Attempt
+fib_list = [1, 2] # first two Fibonacci numbers
+even_sum = 2  # sum with the first even Fibonacci number
 
-for i in list:
-    if i < 4000000:
-        next_term = i + list[list.index(i)+1]
-        list.append(next_term)
-        if next_term % 2 == 0:
-            sum += next_term
+for i in fib_list:
+    if i < 4000000: 
+        next_term = i + fib_list[fib_list.index(i) + 1]  # Calc next Fibonacci number
+        fib_list.append(next_term)  
+        if next_term % 2 == 0: 
+            even_sum += next_term  
 
-print(sum)
+print(even_sum)
+
+#-----------------------------------------------------
+# Direct translation of task
+
+limit = 4000000
+first, second = 1, 2  # first two Fibonacci numbers
+even_sum = 0
+
+while first <= limit:
+    if first % 2 == 0:
+        even_sum += first  # Add the even Fibonacci number to the sum
+    first, second = second, first + second  # Calculate the next Fibonacci numbers
+
+print(even_sum) 
+
+#-----------------------------------------------------
+# More efficient - using how every 3rd Fibonacci number is even
+
+limit = 4000000
+even_sum = 0
+a, b, c = 1, 1, 2
+
+while c < limit:
+    even_sum += c
+    a = b + c
+    b = c + a
+    c = a + b
+
+print(even_sum)
+
+#-----------------------------------------------------
+# Most efficient - using the recursive relationship E(n) = 4 \cdot E(n-1) + E(n-2) 
+
+limit = 4000000
+even_sum = 0
+a, b = 2, 8  # First two even Fibonacci numbers
+
+while a < limit:
+    even_sum += a
+    a, b = b, 4 * b + a  # Update to the next even Fibonacci numbers using the relation
+
+print(even_sum)
