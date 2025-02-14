@@ -5,13 +5,11 @@
 #   There exists exactly one Pythagorean triplet for which a + b + c = 1000. 
 #   Find the product abc.
 
-import math
+limit = 1000
 
-while True:
-    def is_square_number(num):
-        if math.sqrt(num) == int:
-            print("True")
-        else:
-            print("False")
-
-    is_square_number(num = int(input()))
+for i in range(1, limit):
+    for j in range(1, limit):
+        k = limit - i - j
+        if i**2 + j**2 == k**2:
+            print(i*j*k)
+            exit()
