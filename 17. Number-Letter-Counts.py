@@ -14,57 +14,41 @@
 
 sum = 0
 
-def need_and(hd, td, od, s):
-    if hd > 0 and (td > 0 or od > 0):
-        s += 3
-    return s
-    
-def ones(num, sum):
-    oneToNine = [0, 3, 3, 5, 4, 4, 3, 5, 5, 4]
-    sum += oneToNine[num]
-    return sum
+oneToNine = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+teens = ['', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
+tensWord = ['', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
+hundred = ['', 'onehundred', 'twohundred', 'threehundred', 'fourhundred',
+            'fivehundred', 'sixhundred', 'sevenhundred', 'eighthundred', 'ninehundred']
 
-def belowTwenty(num, sum):
-    OneToNineteen = [0, 3, 3, 5, 4, 4, 3, 5, 5, 4, 3, 6, 6, 8, 8, 7, 7, 9, 8, 8]
-    sum += OneToNineteen[num]
-    return sum
+def lengthNum(number):
+    return len(number)
 
-def tens(num, sum):
-    Tens = [0, 3, 6, 6, 6, 5, 5, 7, 6, 6]
-    sum += Tens[num]
-    return sum
+def needAnd(number):
+    if number // 100 != 0:
+        return True
+    else:
+        return False
 
-def hundreds(num, sum):
-    Hundreds = [0, 10, 10, 12, 11, 11, 10, 12, 12, 11]
-    sum += Hundreds[num]
-    return sum
+for i in range(1, 1000):
+    units = i % 10
+    tens = int(i / 10) % 10
+    hundreds = int(i / 100)
 
-for i in range(1, 1001):
-    num = str(i)
-    try:
-        onesDigit = int(num[-1])   
-    except:
-        onesDigit = 0
-    try:
-        tensDigit = int(num[-2])  
-    except:
-        tensDigit = 0
-    try:
-        hundredsDigit = int(num[-3])
-    except:
-        hundredsDigit = 0
+    if needAnd(i):
+        sum += 3
 
-    if i == 1000:
-        sum += 11
+    if tens == 1 and units > 0:
+        num = hundred[hundreds], teens[units]
+        print(num)
+        for j in num:
+            sum += lengthNum(j)
         continue
 
-    sum = hundreds(hundredsDigit, sum)
-    sum = need_and(hundredsDigit, tensDigit, onesDigit, sum)
+    num = hundred[hundreds], tensWord[tens], oneToNine[units]
+    for j in num:
+        sum += lengthNum(j)
+    print(num)
 
-    if tensDigit * 10 + onesDigit < 20:
-        sum = belowTwenty(tensDigit * 10 + onesDigit, sum)
-    else:
-        sum = tens(tensDigit, sum)
-        sum = ones(onesDigit, sum)
-
+sum += lengthNum('onethousand')
+sum -= 27
 print(sum)
